@@ -2,22 +2,23 @@
 
 ## 目的・背景
 
-2022 年現在、一般的にテキストエディターは Visual Studio Code が良く用いられるようになってきています。  
+2022 年現在、テキストエディターは Visual Studio Code が良く用いられるようになってきています。  
 それに伴い、古典的なテキストエディターである、Vim や Emacs などを使用するユーザーは少なくなっているように見受けられます。  
 しかし、それら古典的なエディターについても開発や新しい機能の追加は実施されており、  
 Vim や Emacs をメインのエディターとして使用するユーザーも根強く存在する現状となっています。  
 
 そのような昨今のテキストエディターの情勢を踏まえ、  
-このコンテンツでは、 Vim というエディターについて初歩的な知識を独自の視点でまとめています。  
+このコンテンツでは、 Vim というエディターについて初歩的な知識をまとめ、  
+Vim というエディターを知らない人が Vim の事を知るための情報をまとめています。  
 
-このコンテンツを通じて、実際に Vim を使用するようになる必要はないと考えています。  
+このコンテンツを通じて、必ずしも実際に Vim を使用するようになる必要はないと考えています。  
 Vim がどのような考え方で設計されているかを知るだけでも、ソフトウェア開発者としての学びがあることを意識して、  
-この記事は作成されています。
+このコンテンツは作成されています。
 
 ## 概要
 
 本コンテンツでは主に、Vim に特徴的な「モード」という概念を中心に、  
-そのモードごとにどのようにテキスト編集を行うかについて説明します。
+そのモードごとにどのようにテキスト編集を行うかについて説明します。  
 また、別途 Vim の歴史的な概要や、Visual Studio Code の特徴の比較についても、  
 簡単にまとめて掲載しています。
 
@@ -37,44 +38,49 @@ Vim がどのような考え方で設計されているかを知るだけでも�
 > (OS) ではEmacsと並んで広く使用されているテキストエディタとなっている  
 > https://ja.wikipedia.org/wiki/Vim
 
-Vim は現在は Github にてソースコードが管理されており、  
+Vim は現在 Github にてソースコードが管理されており、  
 ブラム・モールナール氏と世界中の有志の開発者によって開発が勧められています。  
 https://github.com/vim/vim
 
 ## 2. Visual Studio code の特徴との比較
 
-Vim と Visual Studio Code を比較したものは以下です。  
+Vim と Visual Studio Code の特徴はそれぞれ以下です。    
 
 ### Visual Studio Code
 
 * Electron エンジンを活かしたリッチな GUI 操作/表現
+    * Web と同じ技術基板が使用されているため、グラフィカルな表現が得意
     * Vim では実現ができないソースコードの表示方法も実現できる
         * Vim は基本的に CUI の中で動いている形で動作しているため
 * 使用開始からすぐに高い生産性を得られる
+    * 一般的なエディターと同じ操作感で使用できる
+    * 拡張機能やショートカットなどの使用方法がわかりやすくなっている
     * 学習曲線は Hill Equation のイメージ
-
-<img src="./image/hill_equation_interactive_graph_w.jpg" width="25%"/>  
-https://www.physiologyweb.com/calculators/hill_equation_interactive_graph.html
+        * <img src="./image/hill_equation_interactive_graph_w.jpg" width="25%"/>  
+        * https://www.physiologyweb.com/calculators/hill_equation_interactive_graph.html より引用
 
 ### Vim
 
 * 高度に最適化された CLI ベースの操作/表現
+    * CUI ベースで設計されているため、コマンド同士の連携などが得意
     * 操作が全てコマンドの組み合わせという思想で設計されており、様々な組み合わせで強力な編集が可能
-    * 全ての操作にマウス操作が一切必要ない(実質という意味を含む)
+    * 全ての操作にマウス操作が一切必要ない
 * 使用開始からしばらくは生産性を上げにくい
-    * 慣れてくると飛躍的に生産性が向上していく
+    * 一般的なエディターと操作感が異なるため基本的な操作の習得に時間がかかる
+    * 拡張機能やショートカットへのアクセスがコマンドベースのため、理解に時間がかかるが効率的に行える
+    * 上記 2 点を理由に操作に慣れてくると効率的にテキスト編集を行えるようになる
     * 学習曲線は Exponential のイメージ
-
-<img src="./image/image001.png" width="17.5%"/>  
-https://content.nroc.org/DevelopmentalMath/U18L1T1_RESOURCE/text.html
+        * <img src="./image/image001.png" width="17.5%"/>  
+        * https://content.nroc.org/DevelopmentalMath/U18L1T1_RESOURCE/text.html より引用
 
 ## 3. モードについて
 
 Vim は他のエディターにはない、「モード」という概念があります。  
 Vim を操作する際は、モードを切り替えながら操作を実施します。  
 
-<img src="./image/vim_mode.avif" width="50%"/>  
-https://qiita.com/yamamoto_hiroya/items/31ce5bef451d9e3be225
+<img src="./image/vim_mode.avif" width="50%"/>
+
+https://qiita.com/yamamoto_hiroya/items/31ce5bef451d9e3be225 より引用
 
 各モードは、以下のような作業のために用います。
 
@@ -96,9 +102,9 @@ https://qiita.com/yamamoto_hiroya/items/31ce5bef451d9e3be225
 
 ## 4. 各モードごとの基本的な操作
 
-以下へ各モードごとの基本的な操作を示します。 
+以下へ各モードごとの基本的な操作を示します。  
 gif に従い実際に動かしてください。  
-ノーマルモード以外からノーマルモードへ戻るには、`Esc` もしくは `Ctrl+[` をタイプします。
+ノーマルモード以外から能動的にノーマルモードへ戻る際は、`Esc` もしくは `Ctrl+[` をタイプします。
 
 ### ノーマルモード
 
@@ -236,6 +242,7 @@ Vim はサードパーティの Language Server のクライアントプラグ�
 
 ## 6. 参考文献
 
+* 『マスタリングVim』 技術評論社 Ruslan Osipov著 大倉雅史訳
 * https://github.com/vim/vim
 * https://ja.wikipedia.org/wiki/Vim
 * https://howpon.com/21851
